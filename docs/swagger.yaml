@@ -1,22 +1,5 @@
 basePath: /v1
 definitions:
-  http.RegisterRequest:
-    properties:
-      email:
-        example: test@example.com
-        type: string
-      name:
-        example: John Doe
-        type: string
-      password:
-        example: "12345678"
-        minLength: 8
-        type: string
-    required:
-    - email
-    - name
-    - password
-    type: object
   http.authResponse:
     properties:
       token:
@@ -36,19 +19,6 @@ definitions:
         example: false
         type: boolean
     type: object
-  http.loginRequest:
-    properties:
-      email:
-        example: test@example.com
-        type: string
-      password:
-        example: "12345678"
-        minLength: 8
-        type: string
-    required:
-    - email
-    - password
-    type: object
   http.userResponse:
     properties:
       email:
@@ -64,14 +34,50 @@ definitions:
         example: vicalar
         type: string
     type: object
+  request.LoginRequest:
+    properties:
+      email:
+        example: vicalar@gmail.com
+        type: string
+      password:
+        example: Prueba123
+        maxLength: 32
+        minLength: 8
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  request.RegisterRequest:
+    properties:
+      email:
+        example: vicalar@gmail.com
+        type: string
+      name:
+        example: Victor Alarcon
+        type: string
+      password:
+        example: Prueba123
+        maxLength: 32
+        minLength: 8
+        type: string
+      username:
+        example: vicalar
+        type: string
+    required:
+    - email
+    - name
+    - password
+    - username
+    type: object
 info:
   contact:
     name: Victor Alarcon
-    url: https://github.com/VicAlarDev/kvault-back
-  description: This is a simple RESTful
+    url: https://github.com/VicAlarDev/
+  description: Backend API for KVault APP
   license:
     name: MIT
-  title: Go POS (Point of Sale) API
+  title: KVault API
   version: "1.0"
 paths:
   /users:
@@ -85,7 +91,7 @@ paths:
         name: RegisterRequest
         required: true
         schema:
-          $ref: '#/definitions/http.RegisterRequest'
+          $ref: '#/definitions/request.RegisterRequest'
       produces:
       - application/json
       responses:
@@ -128,7 +134,7 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/http.loginRequest'
+          $ref: '#/definitions/request.LoginRequest'
       produces:
       - application/json
       responses:

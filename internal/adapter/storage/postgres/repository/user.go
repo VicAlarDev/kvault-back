@@ -24,8 +24,8 @@ func NewUserRepository(db *postgres.DB) *UserRepository {
 // CreateUser creates a new user in the database
 func (ur *UserRepository) CreateUser(ctx context.Context, user *domain.User) (*domain.User, error) {
 	query := ur.db.QueryBuilder.Insert("users").
-		Columns("name", "email", "password", "username", "created_at").
-		Values(user.Name, user.Email, user.Password, time.Now()).
+		Columns("name", "email", "password", "username").
+		Values(user.Name, user.Email, user.Password, user.Username).
 		Suffix("RETURNING *")
 
 	sql, args, err := query.ToSql()
@@ -35,11 +35,12 @@ func (ur *UserRepository) CreateUser(ctx context.Context, user *domain.User) (*d
 
 	err = ur.db.QueryRow(ctx, sql, args...).Scan(
 		&user.ID,
-		&user.Name,
 		&user.Email,
 		&user.Password,
+		&user.Name,
 		&user.Username,
 		&user.CreatedAt,
+		&user.UpdatedAt,
 	)
 	if err != nil {
 		if errCode := ur.db.ErrorCode(err); errCode == "23505" {
@@ -67,9 +68,9 @@ func (ur *UserRepository) GetUserByID(ctx context.Context, id uint64) (*domain.U
 
 	err = ur.db.QueryRow(ctx, sql, args...).Scan(
 		&user.ID,
-		&user.Name,
 		&user.Email,
 		&user.Password,
+		&user.Name,
 		&user.Username,
 		&user.CreatedAt,
 		&user.UpdatedAt,
@@ -100,9 +101,9 @@ func (ur *UserRepository) GetUserByEmail(ctx context.Context, email string) (*do
 
 	err = ur.db.QueryRow(ctx, sql, args...).Scan(
 		&user.ID,
-		&user.Name,
 		&user.Email,
 		&user.Password,
+		&user.Name,
 		&user.Username,
 		&user.CreatedAt,
 		&user.UpdatedAt,
@@ -142,9 +143,9 @@ func (ur *UserRepository) ListUsers(ctx context.Context, skip, limit uint64) ([]
 	for rows.Next() {
 		err := rows.Scan(
 			&user.ID,
-			&user.Name,
-			&user.Email,
 			&user.Password,
+			&user.Email,
+			&user.Name,
 			&user.Username,
 			&user.CreatedAt,
 			&user.UpdatedAt,
@@ -182,9 +183,10 @@ func (ur *UserRepository) UpdateUser(ctx context.Context, user *domain.User) (*d
 
 	err = ur.db.QueryRow(ctx, sql, args...).Scan(
 		&user.ID,
-		&user.Name,
 		&user.Email,
 		&user.Password,
+		&user.Name,
+		&user.Username,
 		&user.CreatedAt,
 		&user.UpdatedAt,
 	)

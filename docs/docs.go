@@ -11,7 +11,7 @@ const docTemplate = `{
         "title": "{{.Title}}",
         "contact": {
             "name": "Victor Alarcon",
-            "url": "https://github.com/VicAlarDev/kvault-back"
+            "url": "https://github.com/VicAlarDev/"
         },
         "license": {
             "name": "MIT"
@@ -41,7 +41,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/http.RegisterRequest"
+                            "$ref": "#/definitions/request.RegisterRequest"
                         }
                     }
                 ],
@@ -105,7 +105,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/http.loginRequest"
+                            "$ref": "#/definitions/request.LoginRequest"
                         }
                     }
                 ],
@@ -139,29 +139,6 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "http.RegisterRequest": {
-            "type": "object",
-            "required": [
-                "email",
-                "name",
-                "password"
-            ],
-            "properties": {
-                "email": {
-                    "type": "string",
-                    "example": "test@example.com"
-                },
-                "name": {
-                    "type": "string",
-                    "example": "John Doe"
-                },
-                "password": {
-                    "type": "string",
-                    "minLength": 8,
-                    "example": "12345678"
-                }
-            }
-        },
         "http.authResponse": {
             "type": "object",
             "properties": {
@@ -190,24 +167,6 @@ const docTemplate = `{
                 }
             }
         },
-        "http.loginRequest": {
-            "type": "object",
-            "required": [
-                "email",
-                "password"
-            ],
-            "properties": {
-                "email": {
-                    "type": "string",
-                    "example": "test@example.com"
-                },
-                "password": {
-                    "type": "string",
-                    "minLength": 8,
-                    "example": "12345678"
-                }
-            }
-        },
         "http.userResponse": {
             "type": "object",
             "properties": {
@@ -222,6 +181,54 @@ const docTemplate = `{
                 "name": {
                     "type": "string",
                     "example": "John Doe"
+                },
+                "username": {
+                    "type": "string",
+                    "example": "vicalar"
+                }
+            }
+        },
+        "request.LoginRequest": {
+            "type": "object",
+            "required": [
+                "email",
+                "password"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "example": "vicalar@gmail.com"
+                },
+                "password": {
+                    "type": "string",
+                    "maxLength": 32,
+                    "minLength": 8,
+                    "example": "Prueba123"
+                }
+            }
+        },
+        "request.RegisterRequest": {
+            "type": "object",
+            "required": [
+                "email",
+                "name",
+                "password",
+                "username"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "example": "vicalar@gmail.com"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "Victor Alarcon"
+                },
+                "password": {
+                    "type": "string",
+                    "maxLength": 32,
+                    "minLength": 8,
+                    "example": "Prueba123"
                 },
                 "username": {
                     "type": "string",
@@ -246,8 +253,8 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "",
 	BasePath:         "/v1",
 	Schemes:          []string{"http", "https"},
-	Title:            "Go POS (Point of Sale) API",
-	Description:      "This is a simple RESTful",
+	Title:            "KVault API",
+	Description:      "Backend API for KVault APP",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 }

@@ -5,11 +5,11 @@
     ],
     "swagger": "2.0",
     "info": {
-        "description": "This is a simple RESTful",
-        "title": "Go POS (Point of Sale) API",
+        "description": "Backend API for KVault APP",
+        "title": "KVault API",
         "contact": {
             "name": "Victor Alarcon",
-            "url": "https://github.com/VicAlarDev/kvault-back"
+            "url": "https://github.com/VicAlarDev/"
         },
         "license": {
             "name": "MIT"
@@ -38,7 +38,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/http.RegisterRequest"
+                            "$ref": "#/definitions/request.RegisterRequest"
                         }
                     }
                 ],
@@ -102,7 +102,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/http.loginRequest"
+                            "$ref": "#/definitions/request.LoginRequest"
                         }
                     }
                 ],
@@ -136,29 +136,6 @@
         }
     },
     "definitions": {
-        "http.RegisterRequest": {
-            "type": "object",
-            "required": [
-                "email",
-                "name",
-                "password"
-            ],
-            "properties": {
-                "email": {
-                    "type": "string",
-                    "example": "test@example.com"
-                },
-                "name": {
-                    "type": "string",
-                    "example": "John Doe"
-                },
-                "password": {
-                    "type": "string",
-                    "minLength": 8,
-                    "example": "12345678"
-                }
-            }
-        },
         "http.authResponse": {
             "type": "object",
             "properties": {
@@ -187,24 +164,6 @@
                 }
             }
         },
-        "http.loginRequest": {
-            "type": "object",
-            "required": [
-                "email",
-                "password"
-            ],
-            "properties": {
-                "email": {
-                    "type": "string",
-                    "example": "test@example.com"
-                },
-                "password": {
-                    "type": "string",
-                    "minLength": 8,
-                    "example": "12345678"
-                }
-            }
-        },
         "http.userResponse": {
             "type": "object",
             "properties": {
@@ -219,6 +178,54 @@
                 "name": {
                     "type": "string",
                     "example": "John Doe"
+                },
+                "username": {
+                    "type": "string",
+                    "example": "vicalar"
+                }
+            }
+        },
+        "request.LoginRequest": {
+            "type": "object",
+            "required": [
+                "email",
+                "password"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "example": "vicalar@gmail.com"
+                },
+                "password": {
+                    "type": "string",
+                    "maxLength": 32,
+                    "minLength": 8,
+                    "example": "Prueba123"
+                }
+            }
+        },
+        "request.RegisterRequest": {
+            "type": "object",
+            "required": [
+                "email",
+                "name",
+                "password",
+                "username"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "example": "vicalar@gmail.com"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "Victor Alarcon"
+                },
+                "password": {
+                    "type": "string",
+                    "maxLength": 32,
+                    "minLength": 8,
+                    "example": "Prueba123"
                 },
                 "username": {
                     "type": "string",

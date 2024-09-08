@@ -32,7 +32,10 @@ func (s *UserService) Register(ctx context.Context, user *domain.User) (*domain.
 
 	createdUser, err := s.userRepo.CreateUser(ctx, user)
 	if err != nil {
-		return nil, err
+		if err == domain.ErrConflictingData {
+			return nil, err
+		}
+		return nil, domain.ErrInternal
 	}
 
 	return createdUser, nil

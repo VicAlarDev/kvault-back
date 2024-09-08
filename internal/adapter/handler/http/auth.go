@@ -17,11 +17,6 @@ func NewAuthHandler(svc port.AuthService) *AuthHandler {
 	}
 }
 
-type loginRequest struct {
-	Email    string `json:"email" binding:"required,email" example:"test@example.com"`
-	Password string `json:"password" binding:"required,min=8" example:"12345678" minLength:"8"`
-}
-
 // Login godoc
 //
 //	@Summary		Login and get an access token
@@ -29,11 +24,11 @@ type loginRequest struct {
 //	@Tags			Users
 //	@Accept			json
 //	@Produce		json
-//	@Param			request	body		loginRequest	true	"Login request body"
-//	@Success		200		{object}	authResponse	"Succesfully logged in"
-//	@Failure		400		{object}	errorResponse	"Validation error"
-//	@Failure		401		{object}	errorResponse	"Unauthorized error"
-//	@Failure		500		{object}	errorResponse	"Internal server error"
+//	@Param			request	body		request.LoginRequest	true	"Login request body"
+//	@Success		200		{object}	authResponse			"Succesfully logged in"
+//	@Failure		400		{object}	errorResponse			"Validation error"
+//	@Failure		401		{object}	errorResponse			"Unauthorized error"
+//	@Failure		500		{object}	errorResponse			"Internal server error"
 //	@Router			/users/login [post]
 func (ah *AuthHandler) Login(ctx *gin.Context) {
 	var req request.LoginRequest

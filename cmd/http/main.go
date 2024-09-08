@@ -86,7 +86,7 @@ func main() {
 	// User
 	userRepo := repository.NewUserRepository(db)
 	userService := service.NewUserService(userRepo)
-	userHandler := http.NewUserHandler(*userService)
+	userHandler := http.NewUserHandler(userService)
 
 	// Auth
 	authService := service.NewAuthService(userRepo, token)

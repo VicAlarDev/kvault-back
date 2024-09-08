@@ -83,8 +83,10 @@ func (db *DB) Migrate() error {
 
 // ErrorCode returns the error code of the given error
 func (db *DB) ErrorCode(err error) string {
-	pgErr := err.(*pgconn.PgError)
-	return pgErr.Code
+	if pgErr, ok := err.(*pgconn.PgError); ok {
+		return pgErr.Code
+	}
+	return ""
 }
 
 // Close closes the database connection

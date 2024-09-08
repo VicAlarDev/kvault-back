@@ -42,7 +42,7 @@ func New(config *config.Token) (port.TokenService, error) {
 	}, nil
 }
 
-// CreateToken creates a new paseto token
+// GenerateToken CreateToken creates a new paseto token
 func (pt *PasetoToken) GenerateToken(user *domain.User) (string, error) {
 	id, err := uuid.NewRandom()
 	if err != nil {
