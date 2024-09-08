@@ -1,0 +1,46 @@
+services:
+  db:
+    image: postgres:15
+    container_name: ${APP_NAME}_db
+    restart: always
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    ports:
+      - ${DB_PORT}:5432
+    volumes:
+      - postgres:/var/lib/postgresql/data
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: ${APP_NAME}_pgadmin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: valfonsob98@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+  redis:
+    image: redis:7
+    container_name: ${APP_NAME}_redis
+    restart: always
+    command: redis-server --requirepass ${REDIS_PASSWORD}
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis:/data
+  redisinsight:
+    image: redislabs/redisinsight:latest
+    container_name: ${APP_NAME}_redisinsight
+    restart: always
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+    ports:
+      - "8001:8001"
+
+volumes:
+  postgres:
+    driver: local
+  redis:
+    driver: local
